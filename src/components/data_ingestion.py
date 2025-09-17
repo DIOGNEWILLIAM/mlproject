@@ -5,16 +5,17 @@ from src.logger import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
-from src.components.data_transformation import DataTransformation
 
-from src.components.data_transformation import DataTransformationConfig
-# Configuration avec dataclass
-# Configuration avec dataclass
+from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer   # <-- assure-toi que ce fichier existe et contient la classe ModelTrainer
+
+
 @dataclass
 class DataIngestionConfig:
     train_data_path: str = os.path.join('artifacts', "train.csv")
     test_data_path: str = os.path.join('artifacts', "test.csv")
     raw_data_path: str = os.path.join('artifacts', "data.csv")
+
 
 class DataIngestion:
     def __init__(self):
@@ -25,7 +26,6 @@ class DataIngestion:
         try:
             # Lecture du dataset
             df = pd.read_csv(r"C:\Users\HP\Desktop\mlproject\notebook\StudentsPerformance.csv")
-
             logging.info('Read the dataset as dataframe')
 
             # Création du dossier si inexistant
@@ -51,8 +51,23 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(e, sys)
 
+
 if __name__ == "__main__":
+    # Étape 1 : Ingestion
     obj = DataIngestion()
-    train_data,test_data= obj.initiate_data_ingestion()
-    data_transformation=DataTransformation()
-    data_transformation.initiate_data_transformation(train_data,test_data)
+    train_data, test_data = obj.initiate_data_ingestion()
+
+    # Étape 2 : Transformation
+    data_transformation = DataTransformation()
+    train_arr, test_arr, preprocessor_path = data_transformation.initiate_data_transformation(
+        train_data, test_data
+    )
+
+    # Étape 3 : Entraînement
+    model_trainer = ModelTrainer()
+    best_model_name, best_score, model_path = model_trainer.initiate_model_trainer(
+        train_arr, test_arr, preprocessor_path
+    )
+
+    print(f"✅ Best model: {best_model_name} with R² = {best_score}")
+    print(f"📂 Saved at: {model_path}")
