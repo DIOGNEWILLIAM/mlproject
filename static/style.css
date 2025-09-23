@@ -1,0 +1,89 @@
+/* style.css */
+
+/* Body général */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container du formulaire */
+.login {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 400px;
+}
+
+/* Titres */
+.login h1, .login legend {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.form-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #555555;
+}
+
+/* Champs input & select */
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Champs input focus */
+.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+}
+
+/* Bouton submit */
+button.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Placeholder style */
+::placeholder {
+    color: #999999;
+    font-style: italic;
+}
+
+/* Option placeholder dans select */
+select option.placeholder {
+    color: #999999;
+}
+
+/* Espacement pour chaque div mb-3 */
+.mb-3 {
+    margin-bottom: 18px;
+}

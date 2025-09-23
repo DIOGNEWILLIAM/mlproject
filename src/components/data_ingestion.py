@@ -28,6 +28,10 @@ class DataIngestion:
             df = pd.read_csv(r"C:\Users\HP\Desktop\mlproject\notebook\StudentsPerformance.csv")
             logging.info('Read the dataset as dataframe')
 
+            # ✅ Remplacer uniquement les espaces par des underscores
+            df.columns = df.columns.str.replace(" ", "_")
+            logging.info("Renamed dataset columns (spaces → underscores)")
+
             # Création du dossier si inexistant
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
 

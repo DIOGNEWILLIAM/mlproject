@@ -10,7 +10,6 @@ from src.exception import CustomException
 from src.logger import logging
 from src.utils import save_object   # <-- n’oublie pas d’avoir un utils.py qui définit save_object
 import os
-
 @dataclass
 class DataTransformationConfig:
     preprocessor_obj_file_path = os.path.join('artifacts', "preprocessor.pkl")
@@ -22,12 +21,13 @@ class DataTransformation:
 
     def get_data_transformer_object(self):
         try:
-            numerical_columns = ["writing score", "reading score"]
+            # ⚠️ noms de colonnes modifiés pour remplacer les espaces par _
+            numerical_columns = ["writing_score", "reading_score"]
             categorical_columns = [
                 "gender",
-                "race/ethnicity",         # ⚠️ bien écrire comme dans ton CSV
+                "race/ethnicity",
                 "lunch",
-                "test preparation course" # ⚠️ idem : garder les vrais noms de colonnes
+                "test_preparation_course"
             ]
 
             # Pipeline numérique
@@ -50,7 +50,6 @@ class DataTransformation:
             logging.info("Numerical columns standard scaling completed")
             logging.info("Categorical columns encoding completed")
 
-            # Assemblage
             preprocessor = ColumnTransformer(
                 transformers=[
                     ("num_pipeline", num_pipeline, numerical_columns),
@@ -65,7 +64,6 @@ class DataTransformation:
 
     def initiate_data_transformation(self, train_path, test_path):
         try:
-            # Lecture
             train_df = pd.read_csv(train_path)
             test_df = pd.read_csv(test_path)
 
@@ -74,10 +72,9 @@ class DataTransformation:
 
             preprocessing_obj = self.get_data_transformer_object()
 
-            target_column_name = "math score"
-            numerical_columns = ["writing score", "reading score"]
+            target_column_name = "math_score"
+            numerical_columns = ["writing_score", "reading_score"]
 
-            # Séparation features/target
             input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
             target_feature_train_df = train_df[target_column_name]
 
@@ -86,11 +83,9 @@ class DataTransformation:
 
             logging.info("Applying preprocessing object on train and test dataframes")
 
-            # Transformation
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
-            input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)  # ⚠️ tu avais mis target_feature_test_df
+            input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
 
-            # Fusion X et y
             train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 

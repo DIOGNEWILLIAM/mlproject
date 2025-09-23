@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Exam Performance Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        a.button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Student Exam Performance Predictor</h1>
+        <p>Click the button below to go to the prediction page.</p>
+        <a class="button" href="{{ url_for('predict_datapoint') }}">Go to Prediction</a>
+    </div>
+</body>
+</html>
